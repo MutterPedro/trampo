@@ -1,0 +1,104 @@
+{
+  "name": "trampo",
+  "version": "0.1.0",
+  "description": "Configurable job scheduler through well know file formats",
+  "main": "index.ts",
+  "scripts": {
+    "clear": "rimraf lib",
+    "build": "rimraf ./bin && webpack -p --progress --colors",
+    "build:ts": "rimraf ./dist && tsc -p . --sourcemap --strict",
+    "build:watch": "npm run build:ts -- --watch",
+    "lint": "tsc --project tsconfig.json --noEmit && tslint -c tslint.json -p tsconfig.json src/**/*.ts --fix",
+    "release:minor": "standard-version --no-verify --release-as minor",
+    "release:major": "standard-version --no-verify --release-as major",
+    "release:patch": "standard-version --no-verify --release-as patch",
+    "test": "mocha tests/**/*.test.js",
+    "test:tdd": "npm test -- --watch",
+    "test:coverage": "nyc npm test",
+    "coveralls": "npm run test:coverage && nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MutterPedro/trampo.git"
+  },
+  "nyc": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "tests/**"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.ts": [
+        "npm run lint"
+      ],
+      "*.{ts,md}": [
+        "prettier --list-different"
+      ]
+    },
+    "ignore": [
+      "**/dist/*",
+      "**/bin/*",
+      "**/coverage/*",
+      "**/node_modules/*",
+      "**/tests/**/*",
+      "package.json",
+      "package-lock.json"
+    ]
+  },
+  "keywords": [
+    "job",
+    "worker",
+    "scheduler",
+    "configurable",
+    "cron",
+    "easy"
+  ],
+  "author": "Pedro Mutter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MutterPedro/trampo/issues"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "trampo": "bin/index.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "homepage": "https://github.com/MutterPedro/trampo#readme",
+  "devDependencies": {
+    "@types/pino": "^5.8.8",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.5",
+    "dotenv": "^8.0.0",
+    "husky": "^3.0.2",
+    "lint-staged": "^9.2.1",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "pino-pretty": "^3.2.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0",
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.18.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "pino": "^5.13.1"
+  }
+}
