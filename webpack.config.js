@@ -5,7 +5,7 @@ const nodeExternals = require("webpack-node-externals");
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   devtool: "source-map",
-  entry: "./index.ts",
+  entry: "./trampo.ts",
   externals: [
     nodeExternals(),
   ],
@@ -36,7 +36,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: "index.js",
+    filename: "trampo.js",
     path: path.resolve(__dirname, "bin"),
   },
   resolve: {
