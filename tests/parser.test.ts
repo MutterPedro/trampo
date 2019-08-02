@@ -39,7 +39,7 @@ describe('PARSER', () => {
     });
 
     it('should throws syntax error [not valid json file]', () => {
-      expect(getConfigFromJSONFile.bind(null, Buffer.from(faker.random.alphaNumeric(1)))).to.throw(SyntaxError);
+      expect(getConfigFromJSONFile.bind(null, Buffer.from(faker.random.alphaNumeric(1)))).to.throw;
     });
 
     it('should return a default config object', () => {
@@ -84,7 +84,7 @@ describe('PARSER', () => {
       const name = faker.lorem.sentence();
 
       const cronJob = { name, period: faker.random.uuid(), exec: 'echo "Hello"' };
-      const oneTimeJob = { name, when: Date.now(), exec: faker.random.number(500) };
+      const oneTimeJob = { name, when: Date.now(), exec: faker.random.number() };
 
       const buffer = Buffer.from(JSON.stringify([cronJob, oneTimeJob]));
       getConfigFromJSONFile(buffer);
