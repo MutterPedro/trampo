@@ -1,0 +1,122 @@
+/* tslint:disable:no-unused-expression */
+import chai, { expect } from 'chai';
+import * as faker from 'faker';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+
+import { getSchedulerInstances } from '../src/jobs';
+import CronJobScheduler from '../src/jobs/CronJobScheduler';
+import OneTimeJobScheduler from '../src/jobs/OneTimeJobScheduler';
+import { ICronJob, IOneTimeJob } from '../src/models/ITrampoConfiguration';
+import logger from '../src/utils/logger';
+
+chai.use(sinonChai);
+describe.only('INDEX', () => {
+  const timeout = 5000;
+  describe('smoke tests', () => {
+    context('getSchedulerInstances', () => {
+      it('should exists', () => {
+        expect(getSchedulerInstances).to.exist;
+      });
+
+      it('should be a function', () => {
+        expect(getSchedulerInstances).to.be.a('function');
+      });
+    });
+
+    context('CronJobScheduler', () => {
+      it('should exists', () => {
+        expect(CronJobScheduler).to.exist;
+      });
+
+      it('should be a class', () => {
+        const config: ICronJob = { name: faker.lorem.word(), exec: 'ls', period: '* * * * *' };
+        expect(new CronJobScheduler(config)).to.instanceOf(CronJobScheduler);
+      });
+    });
+
+    context('OneTimeJobScheduler', () => {
+      it('should exists', () => {
+        expect(OneTimeJobScheduler).to.exist;
+      });
+
+      it('should be a class', () => {
+        const config: IOneTimeJob = { name: faker.lorem.word(), exec: 'ls', when: Date.now() };
+        expect(new OneTimeJobScheduler(config)).to.instanceOf(OneTimeJobScheduler);
+      });
+    });
+  });
+
+  describe('unit tests', () => {
+    context('getSchedulerInstances', () => {
+      it('should return empty array', () => {
+        expect(getSchedulerInstances([])).to.be.an('array').that.is.empty;
+      });
+
+      it('should return an array with one time job scheduler', () => {
+        const config: IOneTimeJob = { name: faker.lorem.word(), exec: 'ls', when: Date.now() };
+
+        const schedulers = getSchedulerInstances([config]);
+
+        expect(schedulers).to.be.an('array');
+        expect(schedulers.length).to.be.eq(1);
+        expect(schedulers[0]).to.be.instanceOf(OneTimeJobScheduler);
+      });
+
+      it('should return an array with cron job scheduler', () => {
+        const config: ICronJob = { name: faker.lorem.word(), exec: 'ls', period: '* * * * *' };
+
+        const schedulers = getSchedulerInstances([config]);
+
+        expect(schedulers).to.be.an('array');
+        expect(schedulers.length).to.be.eq(1);
+        expect(schedulers[0]).to.be.instanceOf(CronJobScheduler);
+      });
+    });
+
+    context('CronJobScheduler', () => {
+      let instance: CronJobScheduler;
+      let loggerStub: sinon.SinonStub;
+
+      beforeEach(() => {
+        const config: ICronJob = { name: faker.lorem.word(), exec: 'ls', period: '0 * * * *' };
+        instance = new CronJobScheduler(config);
+
+        loggerStub = sinon.stub(logger, 'info');
+      });
+
+      afterEach(() => {
+        loggerStub.restore();
+      });
+
+      it('should implement scheduler methods', () => {
+        expect(instance.start).to.exist;
+        expect(instance.start).to.be.a('function');
+        expect(instance.stop).to.exist;
+        expect(instance.stop).to.be.a('function');
+      });
+
+      it('should start the job', async () => {
+        expect(instance.start.bind(instance)).to.not.throw();
+
+        await instance.start();
+
+        expect(instance.running).to.be.true;
+        expect(loggerStub).to.have.been.calledTwice;
+        expect(loggerStub).to.have.been.calledWith('Cron job started. Running in a period of 0 * * * *');
+      }).timeout(timeout);
+
+      it('should stop the job ', async () => {
+        expect(instance.stop.bind(instance)).to.not.throw();
+
+        await instance.stop();
+
+        expect(instance.running).to.be.false;
+        expect(loggerStub).to.have.been.calledTwice;
+        expect(loggerStub).to.have.been.calledWith('Cron job stopped. Running in a period of 0 * * * *');
+      }).timeout(timeout);
+    });
+
+    context('OneTimeJobScheduler', () => {});
+  });
+});

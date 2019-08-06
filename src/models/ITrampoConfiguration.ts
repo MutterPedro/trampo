@@ -1,6 +1,20 @@
 import * as Joi from '@hapi/joi';
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'OPTIONS' | 'HEAD' | 'DELETE' | 'CONNECT' | 'TRACE' | 'PATCH';
+type HttpMethod =
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH';
 
 interface IHttpRequest {
   url: string;
@@ -24,8 +38,10 @@ export interface IOneTimeJob {
   exec?: string;
 }
 
+export type TrampoJob = Array<IOneTimeJob | ICronJob>;
+
 export interface ITrampoConfiguration {
-  jobs: Array<ICronJob | IOneTimeJob>;
+  jobs: TrampoJob;
 }
 
 export const httpRequestSchema = Joi.object().keys({

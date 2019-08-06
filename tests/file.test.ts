@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-expression */
-import url from 'url';
 import fs from 'fs';
+import url from 'url';
 
 import chai, { expect } from 'chai';
 import * as faker from 'faker';

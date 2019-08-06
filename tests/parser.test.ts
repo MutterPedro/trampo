@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-expression */
-
+import axios from 'axios';
 import chai, { expect } from 'chai';
 import * as faker from 'faker';
 import sinon from 'sinon';
@@ -7,7 +7,7 @@ import sinonChai from 'sinon-chai';
 
 import { ICronJob, IOneTimeJob } from '../src/models/ITrampoConfiguration';
 import logger from '../src/utils/logger';
-import { getConfigFromJSONFile } from '../src/utils/parser';
+import { getActionFunction, getConfigFromJSONFile } from '../src/utils/parser';
 
 chai.use(sinonChai);
 
@@ -22,9 +22,21 @@ describe('PARSER', () => {
         expect(getConfigFromJSONFile).to.be.a('function');
       });
     });
+
+    context('getActionFunction', () => {
+      it('should exists', () => {
+        expect(getActionFunction).to.exist;
+      });
+
+      it('should be a function', () => {
+        expect(getActionFunction).to.be.a('function');
+      });
+    });
   });
 
   describe('unit tests', () => {
+    const timeout = 5000;
+
     context('getConfigFromJSONFile', () => {
       let loggerErrorStub: sinon.SinonStub;
       beforeEach(() => {
@@ -42,7 +54,7 @@ describe('PARSER', () => {
       });
 
       it('should throws syntax error [not valid json file]', () => {
-        expect(() => getConfigFromJSONFile(Buffer.from(faker.random.alphaNumeric(1)))).to.throw();
+        expect(() => getConfigFromJSONFile(Buffer.from(faker.random.alphaNumeric(1)))).to.throw;
       });
 
       it('should return a default config object', () => {
@@ -93,6 +105,59 @@ describe('PARSER', () => {
         getConfigFromJSONFile(buffer);
         expect(loggerErrorStub).to.have.been.calledTwice;
       });
+    });
+
+    context('getActionFunction', () => {
+      it('should return undefined', async () => {
+        // @ts-ignore
+        expect(await getActionFunction({})()).to.be.undefined;
+      });
+
+      it('should return a function to execute a terminal command', done => {
+        const job: ICronJob = {
+          name: faker.lorem.word(),
+          period: '* * * * *',
+          exec: 'echo "Hello"',
+          httpRequest: undefined,
+        };
+
+        const func = getActionFunction(job, (err, stdout) => {
+          expect(err).to.be.null;
+          expect(stdout).to.contain('Hello');
+
+          done();
+        });
+
+        expect(func).to.be.a('function');
+        func();
+      }).timeout(timeout);
+
+      it('should return a function to execute a http request', done => {
+        const stub = sinon.stub(axios, 'request');
+        stub.resolves(true);
+
+        const job: ICronJob = {
+          name: faker.lorem.word(),
+          period: '* * * * *',
+          httpRequest: {
+            body: {},
+            headers: {},
+            method: 'POST',
+            url: faker.internet.url(),
+          },
+        };
+
+        const func = getActionFunction(job, result => {
+          expect(result).to.be.true;
+          expect(stub).to.be.calledOnce;
+
+          stub.restore();
+          done();
+        });
+
+        expect(func).to.be.a('function');
+        func();
+      }).timeout(timeout);
     });
   });
 });
