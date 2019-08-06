@@ -2,6 +2,7 @@
 import commander from 'commander';
 
 import { description, version } from '../package.json';
+import { run } from './jobs';
 
 const program = commander
   .version(version)
@@ -11,4 +12,6 @@ const program = commander
 
 if (!program.file) {
   program.outputHelp();
+} else {
+  run(program.file);
 }

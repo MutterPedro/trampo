@@ -11,7 +11,7 @@ import { ICronJob, IOneTimeJob } from '../src/models/ITrampoConfiguration';
 import logger from '../src/utils/logger';
 
 chai.use(sinonChai);
-describe.only('INDEX', () => {
+describe('INDEX', () => {
   const timeout = 5000;
   describe('smoke tests', () => {
     context('getSchedulerInstances', () => {
@@ -48,6 +48,16 @@ describe.only('INDEX', () => {
   });
 
   describe('unit tests', () => {
+    let loggerStub: sinon.SinonStub;
+
+    beforeEach(() => {
+      loggerStub = sinon.stub(logger, 'info');
+    });
+
+    afterEach(() => {
+      loggerStub.restore();
+    });
+
     context('getSchedulerInstances', () => {
       it('should return empty array', () => {
         expect(getSchedulerInstances([])).to.be.an('array').that.is.empty;
@@ -76,17 +86,10 @@ describe.only('INDEX', () => {
 
     context('CronJobScheduler', () => {
       let instance: CronJobScheduler;
-      let loggerStub: sinon.SinonStub;
 
       beforeEach(() => {
         const config: ICronJob = { name: faker.lorem.word(), exec: 'ls', period: '0 * * * *' };
         instance = new CronJobScheduler(config);
-
-        loggerStub = sinon.stub(logger, 'info');
-      });
-
-      afterEach(() => {
-        loggerStub.restore();
       });
 
       it('should implement scheduler methods', () => {
@@ -117,6 +120,55 @@ describe.only('INDEX', () => {
       }).timeout(timeout);
     });
 
-    context('OneTimeJobScheduler', () => {});
+    context('OneTimeJobScheduler', () => {
+      const daysMillisecond = 172800000;
+      let instance: OneTimeJobScheduler;
+      let setTimeoutStub: sinon.SinonStub;
+      let clearTimeoutStub: sinon.SinonStub;
+
+      beforeEach(() => {
+        const config: IOneTimeJob = { when: daysMillisecond, name: faker.lorem.word(), exec: 'ls' };
+        instance = new OneTimeJobScheduler(config);
+        setTimeoutStub = sinon.stub(global, 'setTimeout');
+        setTimeoutStub.returns(faker.random.number());
+
+        clearTimeoutStub = sinon.stub(global, 'clearTimeout');
+      });
+
+      afterEach(() => {
+        setTimeoutStub.restore();
+        clearTimeoutStub.restore();
+      });
+
+      it('should implement scheduler methods', () => {
+        expect(instance.start).to.exist;
+        expect(instance.start).to.be.a('function');
+        expect(instance.stop).to.exist;
+        expect(instance.stop).to.be.a('function');
+      });
+
+      it('should start the job', async () => {
+        expect(instance.start.bind(instance)).to.not.throw();
+
+        await instance.start();
+
+        expect(instance.running).to.be.true;
+        expect(setTimeoutStub).to.have.been.calledTwice;
+        expect(loggerStub).to.have.been.calledThrice;
+        expect(loggerStub).to.have.been.calledWith(
+          `One time job started. It will run at ${new Date(Date.now() + daysMillisecond).toLocaleDateString()}`,
+        );
+      }).timeout(timeout);
+
+      it('should stop the job ', async () => {
+        expect(instance.stop.bind(instance)).to.not.throw();
+
+        await instance.start();
+        await instance.stop();
+
+        expect(instance.running).to.be.false;
+        expect(clearTimeoutStub).to.have.been.calledOnce;
+      }).timeout(timeout);
+    });
   });
 });

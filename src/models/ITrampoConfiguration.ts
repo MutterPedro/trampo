@@ -64,7 +64,7 @@ export const oneTimeJobSchema = Joi.object()
         .min(1)
         .required(),
       Joi.number()
-        .min(Date.now())
+        .min(0)
         .required(),
     ],
     httpRequest: httpRequestSchema,
