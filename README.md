@@ -16,7 +16,7 @@ To run Trampo you will just need to have Nodejs (at least version 8) and NPM ins
 You can install Trampo on your global scope:
 
 ```shell script
-npm i -S -g trampo
+npm i -g trampo
 ```
 
 Or you can run it directly using npx:
