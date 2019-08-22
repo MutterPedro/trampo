@@ -258,3 +258,4 @@ dist
 bin
 # End of https://www.gitignore.io/api/node,linux,macos,windows,webstorm,visualstudiocode
 temp.json
+test.txt

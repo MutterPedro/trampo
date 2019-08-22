@@ -3,6 +3,7 @@ import chai, { expect } from 'chai';
 import * as faker from 'faker';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
+import chalk from 'chalk';
 
 import { getSchedulerInstances } from '../src/jobs';
 import CronJobScheduler from '../src/jobs/CronJobScheduler';
@@ -86,9 +87,11 @@ describe('INDEX', () => {
 
     context('CronJobScheduler', () => {
       let instance: CronJobScheduler;
+      let name: string = '';
 
       beforeEach(() => {
-        const config: ICronJob = { name: faker.lorem.word(), exec: 'ls', period: '0 * * * *' };
+        name = faker.lorem.word();
+        const config: ICronJob = { name, exec: 'ls', period: '0 * * * *' };
         instance = new CronJobScheduler(config);
       });
 
@@ -106,7 +109,9 @@ describe('INDEX', () => {
 
         expect(instance.running).to.be.true;
         expect(loggerStub).to.have.been.calledTwice;
-        expect(loggerStub).to.have.been.calledWith('Cron job started. Running in a period of 0 * * * *');
+        expect(loggerStub).to.have.been.calledWith(
+          `Cron job ${chalk.magentaBright(name)} started. Running in a period of 0 * * * *`,
+        );
       }).timeout(timeout);
 
       it('should stop the job ', async () => {
@@ -116,7 +121,9 @@ describe('INDEX', () => {
 
         expect(instance.running).to.be.false;
         expect(loggerStub).to.have.been.calledTwice;
-        expect(loggerStub).to.have.been.calledWith('Cron job stopped. Running in a period of 0 * * * *');
+        expect(loggerStub).to.have.been.calledWith(
+          `Cron job ${chalk.magentaBright(name)} stopped. Running in a period of 0 * * * *`,
+        );
       }).timeout(timeout);
     });
 
@@ -125,9 +132,11 @@ describe('INDEX', () => {
       let instance: OneTimeJobScheduler;
       let setTimeoutStub: sinon.SinonStub;
       let clearTimeoutStub: sinon.SinonStub;
+      let name: string = '';
 
       beforeEach(() => {
-        const config: IOneTimeJob = { when: daysMillisecond, name: faker.lorem.word(), exec: 'ls' };
+        name = faker.lorem.word();
+        const config: IOneTimeJob = { name, when: daysMillisecond, exec: 'ls' };
         instance = new OneTimeJobScheduler(config);
         setTimeoutStub = sinon.stub(global, 'setTimeout');
         setTimeoutStub.returns(faker.random.number());
@@ -156,7 +165,9 @@ describe('INDEX', () => {
         expect(setTimeoutStub).to.have.been.calledTwice;
         expect(loggerStub).to.have.been.calledThrice;
         expect(loggerStub).to.have.been.calledWith(
-          `One time job started. It will run at ${new Date(Date.now() + daysMillisecond).toLocaleDateString()}`,
+          `One time job ${chalk.magentaBright(name)} started. It will run at ${new Date(
+            Date.now() + daysMillisecond,
+          ).toLocaleDateString()}`,
         );
       }).timeout(timeout);
 

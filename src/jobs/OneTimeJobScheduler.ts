@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 import { IOneTimeJob } from '../models/ITrampoConfiguration';
 import logger from '../utils/logger';
 import { getActionFunction } from '../utils/parser';
@@ -15,7 +17,9 @@ export default class OneTimeJobScheduler extends Scheduler<IOneTimeJob> {
     this.timeout = setTimeout(getActionFunction(this.config), Number(this.config.when));
 
     logger.info(
-      `One time job started. It will run at ${new Date(Date.now() + Number(this.config.when)).toLocaleDateString()}`,
+      `One time job ${chalk.magentaBright(this.config.name)} started. It will run at ${new Date(
+        Date.now() + Number(this.config.when),
+      ).toLocaleDateString()}`,
     );
     this.running = true;
   }
@@ -25,7 +29,7 @@ export default class OneTimeJobScheduler extends Scheduler<IOneTimeJob> {
       clearTimeout(this.timeout);
     }
 
-    logger.info(`One time job stopped`);
+    logger.info(`One time job ${chalk.magentaBright(this.config.name)} stopped`);
     this.running = false;
   }
 }

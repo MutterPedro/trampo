@@ -1,4 +1,6 @@
+import chalk from 'chalk';
 import { CronJob } from 'cron';
+
 import { ICronJob } from '../models/ITrampoConfiguration';
 import logger from '../utils/logger';
 import { getActionFunction } from '../utils/parser';
@@ -23,13 +25,17 @@ export default class CronJobScheduler extends Scheduler<ICronJob> {
     await this.cron.start();
 
     this.running = true;
-    logger.info(`Cron job started. Running in a period of ${this.config.period}`);
+    logger.info(
+      `Cron job ${chalk.magentaBright(this.config.name)} started. Running in a period of ${this.config.period}`,
+    );
   }
 
   public async stop(): Promise<void> {
     await this.cron.stop();
 
     this.running = false;
-    logger.info(`Cron job stopped. Running in a period of ${this.config.period}`);
+    logger.info(
+      `Cron job ${chalk.magentaBright(this.config.name)} stopped. Running in a period of ${this.config.period}`,
+    );
   }
 }
