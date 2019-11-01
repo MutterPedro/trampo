@@ -6,7 +6,7 @@ Configurable job scheduler through well know file formats
 [![Build Status](https://travis-ci.org/MutterPedro/trampo.svg?branch=master)](https://travis-ci.org/MutterPedro/trampo)
 [![Coverage Status](https://coveralls.io/repos/github/MutterPedro/trampo/badge.svg?branch=master)](https://coveralls.io/github/MutterPedro/trampo?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e7db5faf7981792b581/maintainability)](https://codeclimate.com/github/MutterPedro/trampo/maintainability)
-[![Known Vulnerabilities](https://snyk.io//test/github/MutterPedro/trampo/badge.svg?targetFile=package.json)](https://snyk.io//test/github/MutterPedro/trampo?targetFile=package.json)
+[![Known Vulnerabilities](https://snyk.io//test/github/MutterPedro/trampo/badge.svg?targetFile=package.json)](https://snyk.io//test/github/MutterPedro/trampo?targetFile=package.json) [![Greenkeeper badge](https://badges.greenkeeper.io/MutterPedro/trampo.svg)](https://greenkeeper.io/)
 
 ### Prerequisities
 
