@@ -1,8 +1,7 @@
 /* tslint:disable:no-unused-expression */
+import { expect } from 'chai';
 import { exec } from 'child_process';
 import fs from 'fs';
-
-import { expect } from 'chai';
 
 import { description, name, version } from '../package.json';
 import { TrampoJob } from '../src/models/ITrampoConfiguration';
@@ -84,7 +83,8 @@ describe('INDEX', () => {
             throw err2;
           }
 
-          expect(stdout.trim()).to.contain('One time job started');
+          expect(stdout.trim()).to.contain(config[0].name);
+          expect(stdout.trim()).to.contain('started');
 
           fs.unlink(path, err3 => {
             if (err3) {

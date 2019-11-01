@@ -48,7 +48,7 @@ export const httpRequestSchema = Joi.object().keys({
   url: Joi.string()
     .uri()
     .required(),
-  method: Joi.string().equal(['GET', 'POST', 'PUT', 'OPTIONS', 'HEAD', 'DELETE', 'CONNECT', 'TRACE', 'PATCH']),
+  method: Joi.string().equal('GET', 'POST', 'PUT', 'OPTIONS', 'HEAD', 'DELETE', 'CONNECT', 'TRACE', 'PATCH'),
   headers: Joi.object(),
   body: Joi.any(),
   params: Joi.object(),
