@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/MutterPedro/trampo/compare/v0.2.4...v0.2.5) (2019-11-01)
+
+
+### Features
+
+* **Dependencies:** update dependencies version ([deeb1a8](https://github.com/MutterPedro/trampo/commit/deeb1a8))
+
 ### [0.2.4](https://github.com/MutterPedro/trampo/compare/v0.2.3...v0.2.4) (2019-08-22)
 
 
