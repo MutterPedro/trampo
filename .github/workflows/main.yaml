@@ -1,0 +1,32 @@
+name: Basic checks
+on:
+  - push
+  - pull_request
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: VAR.js
+        uses: MutterPedro/varjs@1.0.0
+        with:
+          SCRIPT: "lint"
+  test:
+    name: Testing with coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: VAR.js
+        uses: MutterPedro/varjs@1.0.0
+        with:
+          SCRIPT: "test:coverage"
+  build:
+    name: Building
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: VAR.js
+        uses: MutterPedro/varjs@1.0.0
+        with:
+          SCRIPT: "build"
