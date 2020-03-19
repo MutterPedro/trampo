@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/MutterPedro/trampo/compare/v0.2.5...v0.3.0) (2020-03-19)
+
+
+### Features
+
+* **GitHub Action:** added github action VAR.js ([d70ad35](https://github.com/MutterPedro/trampo/commit/d70ad35091ff8f08d102ede1ff3dff0e755294ae))
+
+
+### Bug Fixes
+
+* **GitHub Action:** fix VAR.js version ([4619367](https://github.com/MutterPedro/trampo/commit/4619367140a0dc920473aefa949e05d1c2dec8a0))
+
 ### [0.2.5](https://github.com/MutterPedro/trampo/compare/v0.2.4...v0.2.5) (2019-11-01)
 
 
