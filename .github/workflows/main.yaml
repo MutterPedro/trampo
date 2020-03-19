@@ -9,24 +9,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: VAR.js
-        uses: MutterPedro/varjs@1.0.0
+        uses: MutterPedro/varjs@v1.0.0
         with:
-          SCRIPT: "lint"
+          SCRIPT: 'lint'
   test:
     name: Testing with coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: VAR.js
-        uses: MutterPedro/varjs@1.0.0
+        uses: MutterPedro/varjs@v1.0.0
         with:
-          SCRIPT: "test:coverage"
+          SCRIPT: 'test:coverage'
   build:
     name: Building
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: VAR.js
-        uses: MutterPedro/varjs@1.0.0
+        uses: MutterPedro/varjs@v1.0.0
         with:
-          SCRIPT: "build"
+          SCRIPT: 'build'
