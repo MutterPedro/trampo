@@ -38,7 +38,7 @@ export interface IOneTimeJob {
   exec?: string;
 }
 
-export type TrampoJob = Array<IOneTimeJob | ICronJob>;
+export type TrampoJob = (IOneTimeJob | ICronJob)[];
 
 export interface ITrampoConfiguration {
   jobs: TrampoJob;
