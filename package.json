@@ -1,6 +1,6 @@
 {
   "name": "trampo",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Configurable job scheduler through well know file formats",
   "main": "trampo",
   "scripts": {
@@ -105,7 +105,7 @@
     "sinon": "^9.0.2",
     "sinon-chai": "^3.5.0",
     "standard-version": "^7.1.0",
-    "ts-loader": "^6.2.2",
+    "ts-loader": "^7.0.0",
     "ts-mocha": "^7.0.0",
     "ts-node": "^8.8.2",
     "tslint": "^6.1.1",
