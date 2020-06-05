@@ -86,7 +86,7 @@
     "@types/cron": "^1.7.2",
     "@types/expect": "^24.3.0",
     "@types/faker": "^4.1.12",
-    "@types/hapi__joi": "^17.1.0",
+    "@types/hapi__joi": "^17.1.2",
     "@types/mocha": "^7.0.2",
     "@types/pino": "^6.0.1",
     "@types/sinon": "^9.0.4",
@@ -96,9 +96,9 @@
     "dotenv": "^8.2.0",
     "faker": "^4.1.0",
     "husky": "^4.2.5",
-    "lint-staged": "^10.2.6",
+    "lint-staged": "^10.2.9",
     "mocha": "^7.2.0",
-    "nyc": "^15.0.1",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "shebang-loader": "0.0.1",
@@ -107,11 +107,11 @@
     "standard-version": "^8.0.0",
     "ts-loader": "^7.0.5",
     "ts-mocha": "^7.0.0",
-    "ts-node": "^8.10.1",
+    "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
     "tslint-config-airbnb": "^5.11.2",
     "tslint-loader": "^3.5.4",
-    "typescript": "^3.9.3",
+    "typescript": "^3.9.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2"
@@ -122,7 +122,7 @@
     "chalk": "^4.0.0",
     "commander": "^5.1.0",
     "cron": "^1.8.2",
-    "pino": "^6.3.0",
+    "pino": "^6.3.2",
     "pino-pretty": "^4.0.0"
   }
 }
