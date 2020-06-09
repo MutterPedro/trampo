@@ -119,7 +119,7 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "axios": "^0.19.2",
-    "chalk": "^4.0.0",
+    "chalk": "^4.1.0",
     "commander": "^5.1.0",
     "cron": "^1.8.2",
     "pino": "^6.3.2",
