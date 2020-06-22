@@ -1,6 +1,6 @@
 {
   "name": "trampo",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Configurable job scheduler through well know file formats",
   "main": "trampo",
   "scripts": {
