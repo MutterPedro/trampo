@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.8](https://github.com/MutterPedro/trampo/compare/v0.3.7...v0.3.8) (2020-07-30)
+
 ### [0.3.7](https://github.com/MutterPedro/trampo/compare/v0.3.6...v0.3.7) (2020-06-22)
 
 ### [0.3.6](https://github.com/MutterPedro/trampo/compare/v0.3.5...v0.3.6) (2020-06-05)
